@@ -1,0 +1,34 @@
+---
+# tasks file for gandi-hosting-vm
+
+- name: Ensure gandi-hosting-vm2 package is present
+  apt:
+    name: gandi-hosting-vm2
+    state: present
+  become: true
+  tags: gandi
+
+- name: Gandi configuration file
+  template:
+    src: etc/default/gandi.j2
+    dest: /etc/default/gandi
+    owner: root
+    group: root
+    mode: '0644'
+  become: true
+  tags: gandi
+
+- name: Fix systemd-udevd RestrictAddressFamilies
+  copy:
+    dest: /etc/systemd/system/systemd-udevd.service.d/local.conf
+    content: |
+      [Service]
+      RestrictAddressFamilies=AF_UNIX AF_NETLINK AF_INET AF_INET6 AF_PACKET
+    owner: root
+    group: root
+    mode: '0644'
+  notify:
+    - systemd daemon-reload
+    - service udev restart
+  become: true
+  tags: gandi

@@ -1,0 +1,14 @@
+---
+# handlers file for gandi-hosting-vm
+
+- name: systemd daemon-reload
+  systemd:
+    daemon_reload: yes
+  become: true
+
+- name: service udev restart
+  listen: udev changed
+  service:
+    name: udev
+    state: restarted
+  become: true

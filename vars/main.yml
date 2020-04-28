@@ -1,0 +1,8 @@
+---
+# vars file for gandi-hosting-vm
+
+gandi_plugin_dir: "/etc/gandi/plugins.d"
+gandi_temp_dir_conf: "/var/gandi"
+gandi_syslog_target: "gandi"
+gandi_serverurl: "mirrors.gandi.net"
+gandi_hook_dir: "/etc/gandi/hooks/"
