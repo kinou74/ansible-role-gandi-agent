@@ -31,4 +31,6 @@
     - systemd daemon-reload
     - service udev restart
   become: true
+  when: ansible_facts['distribution'] == "Debian" and
+        ansible_facts['distribution_major_version'] == "11"
   tags: gandi
