@@ -66,7 +66,7 @@ Example Playbook
 License
 -------
 
-To be defined
+Licensed under the 2-clause "Simplified BSD License". See [LICENSE.md](/LICENSE.md) for details.
 
 Contributor
 ------------------
