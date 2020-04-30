@@ -32,5 +32,29 @@
     - service udev restart
   become: true
   when: ansible_facts['distribution'] == "Debian" and
-        ansible_facts['distribution_major_version'] == "11"
+        ansible_facts['distribution_major_version'] == "10"
+  tags: gandi
+
+
+- name: Patch udev 86-gandi.rules (1/2)
+  replace:
+    backup: yes
+    path: /etc/udev/rules.d/86-gandi.rules
+    # OPTIONS+="last_rule"
+    regexp: '^(.+)OPTIONS\+=\"last_rule\"(.*)$'
+    replace: '\1GOTO="last_rule"\2'
+  notify:
+    - service udev restart
+  become: true
+  tags: gandi
+  
+- name: Patch udev 86-gandi.rules (2/2)
+  lineinfile:
+    backup: yes
+    path: /etc/udev/rules.d/86-gandi.rules
+    insertafter: EOF
+    line: 'LABEL="last_rule"'
+  notify:
+    - service udev restart
+  become: true
   tags: gandi
