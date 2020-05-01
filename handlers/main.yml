@@ -1,5 +1,5 @@
 ---
-# handlers file for gandi-hosting-vm
+# handlers file for gandi-agent
 
 - name: systemd daemon-reload
   systemd:

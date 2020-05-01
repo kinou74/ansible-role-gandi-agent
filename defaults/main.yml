@@ -1,5 +1,5 @@
 ---
-# defaults file for gandi-hosting-vm
+# defaults file for gandi-agent
 
 # Should we fix RestrictAddressFamilies in systemd-udev on Debian 10 Buster
 gandi_fix_buster_restrictaddressfamilies: False

@@ -1,6 +1,6 @@
 galaxy_info:
   author: Nicolas Garin <nicolas.garin@gmail.com>
-  description: A role to configure Gandu agent on Gandi IaaS virtual machines.
+  description: A role to configure Gandi agent on Gandi IaaS virtual machines.
   license: Simplified BSD License
   min_ansible_version: 2.4
 

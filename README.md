@@ -1,4 +1,4 @@
-gandi-hosting-vm
+gandi-agent
 =========
 
 The main goal of this role is to configure the [Gandi agent](https://docs.gandi.net/fr/cloud/gestion_serveur/agent_gandi.html) installed by `gandi-hosting-vm2` package on your [Gandi Hosting IaaS](https://www.gandi.net/en/cloud) virtual machine.
@@ -16,6 +16,8 @@ Requirements
 ------------
 
 Please ensure you've hard-rebooted your virtual machine at least once, from [Gandi-Cli](https://cli.gandi.net/) or your [Gandi admin console](https://admin.gandi.net/cloud/), before playing with this role: in fact, the `gandi-boostrap` may overwrite your configuration again and again if you only soft-reboot the vm (i.e. `shutdown -r`) and until you perform a hard-reboot.
+
+For the time being, this role is only compatible with Debian installations.
 
 Role Variables
 --------------
@@ -71,7 +73,7 @@ Example Playbook
 ```yaml
     - hosts: servers
       roles:
-         - role: kinou74.gandi-hosting-vm
+         - role: kinou74.gandi-agent
 ```
 
 License
