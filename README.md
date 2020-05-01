@@ -24,20 +24,20 @@ A description of the settable variables for this role should go here, including 
 
 | Variable                  	| Default 	| Comments 	|
 |---------------------	      |---------	|----------	|
-| `gandi_config_motd`         | `1`       |   |
-| `gandi_config_timezone`     | `1`       |   |
-| `gandi_config_sysctl`       | `1`       |   |
-| `gandi_config_sshd`         | `1`       |   |
-| `gandi_config_console`      | `1`       |   |
-| `gandi_config_hostname`     | `1`       |   |
-| `gandi_config_nameserver`   | `1`       |   |
-| `gandi_config_allow_mount`  | `1`       |   |
-| `gandi_config_cron`         | `1`       |   |
+| `gandi_config_motd`         | `True`    |   |
+| `gandi_config_timezone`     | `True`    |   |
+| `gandi_config_sysctl`       | `True`    |   |
+| `gandi_config_sshd`         | `True`    |   |
+| `gandi_config_console`      | `True`    |   |
+| `gandi_config_hostname`     | `True`    |   |
+| `gandi_config_nameserver`   | `True`    |   |
+| `gandi_config_allow_mount`  | `True`    |   |
+| `gandi_config_cron`         | `True`    |   |
 | `gandi_config_mount_params` | `"rw,nosuid,nodev,noatime"` |   |
 | `gandi_config_disk_root`    | `"/srv"`  |   |
 | `gandi_config_nodhcp`       | `""`      |   |
-| `gandi_config_multiqueue`   | `1`       |   |
-| `gandi_config_network`      | `1`       |   |
+| `gandi_config_multiqueue`   | `True`    |   |
+| `gandi_config_network`      | `True`    |   |
 
 Dependencies
 ------------
