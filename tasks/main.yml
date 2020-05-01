@@ -2,23 +2,24 @@
 # tasks file for gandi-hosting-vm
 
 - name: Ensure gandi-hosting-vm2 package is present
+  become: true
   apt:
     name: gandi-hosting-vm2
     state: present
-  become: true
   tags: gandi
 
 - name: Gandi configuration file
+  become: true
   template:
     src: etc/default/gandi.j2
     dest: /etc/default/gandi
     owner: root
     group: root
     mode: '0644'
-  become: true
   tags: gandi
 
 - name: Fix systemd-udevd RestrictAddressFamilies
+  become: true
   copy:
     dest: /etc/systemd/system/systemd-udevd.service.d/local.conf
     content: |
@@ -27,34 +28,36 @@
     owner: root
     group: root
     mode: '0644'
+  when: gandi_fix_buster_restrictaddressfamilies and
+        ansible_facts['distribution'] == "Debian" and
+        ansible_facts['distribution_major_version'] == "10"
   notify:
     - systemd daemon-reload
     - service udev restart
-  become: true
-  when: ansible_facts['distribution'] == "Debian" and
-        ansible_facts['distribution_major_version'] == "10"
   tags: gandi
 
 
 - name: Patch udev 86-gandi.rules (1/2)
+  become: true
   replace:
     backup: yes
     path: /etc/udev/rules.d/86-gandi.rules
     # OPTIONS+="last_rule"
     regexp: '^(.+)OPTIONS\+=\"last_rule\"(.*)$'
     replace: '\1GOTO="last_rule"\2'
+  when: gandi_patch_udev_last_rule
   notify:
     - service udev restart
-  become: true
   tags: gandi
   
 - name: Patch udev 86-gandi.rules (2/2)
+  become: true
   lineinfile:
     backup: yes
     path: /etc/udev/rules.d/86-gandi.rules
     insertafter: EOF
     line: 'LABEL="last_rule"'
+  when: gandi_patch_udev_last_rule
   notify:
     - service udev restart
-  become: true
   tags: gandi

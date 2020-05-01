@@ -20,24 +20,35 @@ Please ensure you've hard-rebooted your virtual machine at least once, from [Gan
 Role Variables
 --------------
 
-A description of the settable variables for this role should go here, including any variables that are in defaults/main.yml, vars/main.yml, and any variables that can/should be set via parameters to the role. Any variables that are read from other roles and/or the global scope (ie. hostvars, group vars, etc.) should be mentioned here as well.
+| _Defaults_ variable         	      | Default value	| Comments 	|
+|---------------------	              |---------	|----------	|
+| `gandi_fix_buster_restrictaddressfamilies` | `False`   | Should we fix `RestrictAddressFamilies` in systemd-udev or not. Additional condition when run on Debian 10 is applied.  |
+| `gandi_patch_udev_last_rule`        | `False`   | Patch udev `86-gandi.rules` to use GOTO instead of `last_rule` option |
+| `gandi_config_motd`                 | `True`    |   |
+| `gandi_config_timezone`             | `True`    |   |
+| `gandi_config_sysctl`               | `True`    |   |
+| `gandi_config_sshd`                 | `True`    |   |
+| `gandi_config_console`              | `True`    |   |
+| `gandi_config_hostname`             | `True`    |   |
+| `gandi_config_nameserver`           | `True`    |   |
+| `gandi_config_allow_mount`          | `True`    |   |
+| `gandi_config_cron`                 | `True`    |   |
+| `gandi_config_mount_params`         | `"rw,nosuid,nodev,noatime"` |   |
+| `gandi_config_disk_root`            | `"/srv"`  |   |
+| `gandi_config_nodhcp`               | `""`      |   |
+| `gandi_config_multiqueue`           | `True`    |   |
+| `gandi_config_network`              | `True`    |   |
 
-| Variable                  	| Default 	| Comments 	|
-|---------------------	      |---------	|----------	|
-| `gandi_config_motd`         | `True`    |   |
-| `gandi_config_timezone`     | `True`    |   |
-| `gandi_config_sysctl`       | `True`    |   |
-| `gandi_config_sshd`         | `True`    |   |
-| `gandi_config_console`      | `True`    |   |
-| `gandi_config_hostname`     | `True`    |   |
-| `gandi_config_nameserver`   | `True`    |   |
-| `gandi_config_allow_mount`  | `True`    |   |
-| `gandi_config_cron`         | `True`    |   |
-| `gandi_config_mount_params` | `"rw,nosuid,nodev,noatime"` |   |
-| `gandi_config_disk_root`    | `"/srv"`  |   |
-| `gandi_config_nodhcp`       | `""`      |   |
-| `gandi_config_multiqueue`   | `True`    |   |
-| `gandi_config_network`      | `True`    |   |
+The following vars are defined to not be hardcoded in the gandi agent configuration file template. Nevertheless they shouldn't be changed.
+
+| _Vars_ variable       | Value   	               |
+|---------------------	|---------	               |
+| `gandi_plugin_dir`    | `"/etc/gandi/plugins.d"` |
+| `gandi_temp_dir_conf` | `"/var/gandi"`           |
+| `gandi_syslog_target` | `"gandi"`                |
+| `gandi_serverurl`     | `"mirrors.gandi.net"`    |
+| `gandi_hook_dir`      | `"/etc/gandi/hooks/"`    |
+
 
 Dependencies
 ------------
@@ -48,16 +59,16 @@ None
 Listeners/Handlers
 ----------------
 
-This role will restart `systemd` daemon and `udev` service if `RestrictAddressFamilies` fix is applied.
+- Most of gandi agent parameters are read at boot time when gandi `systemd` services are started. As a consequence, and for the time being, there is no particular handler when gandi agent parameters are changed. This means that you may have to reboot your VM for new parameters to be taken into account.
 
-`udev` service is restarted if _udev_ `86-gandi.rules` is patched.
+- `systemd` daemon and `udev` service are restarted when `RestrictAddressFamilies` fix is applied.
 
-See role description above for more details.
+- `udev` service is restarted when _udev_ `86-gandi.rules` is applied.
 
 Example Playbook
 ----------------
 
-```
+```yaml
     - hosts: servers
       roles:
          - role: kinou74.gandi-hosting-vm
