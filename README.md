@@ -73,7 +73,8 @@ Example Playbook
 ```yaml
     - hosts: servers
       roles:
-         - role: kinou74.gandi-agent
+        - role: kinou74.gandi-agent
+          when: ansible_facts['distribution'] == "Debian"
 ```
 
 License
